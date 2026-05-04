@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Json and JS Asynchronous</title>
+</head>
+
+<body>    
+    <h3>Guess the Superman</h3>
+<p id="hint"></p>   
+    <input id="ans" placeholder="your answer">    
+    <button onclick="check()">Ok</button>    
+<p id="out"></p>
+
+
+    <p id="result"></p>
+    <script>
+
+var myObj = {
+    name: "Riya",
+    age: 12,
+    grade: 7
+};
+
+var myJSON = JSON.stringify(myObj); // converts object into JSON for sending data
+var newObj = JSON.parse(myJSON);  // converts JSON into object while receiving data
+
+document.getElementById("result").innerHTML = newObj.name;
+
+
+
+// JS Object
+
+let obj = {
+  name: "Superman",
+  hint: "I grew up in Smallville, Kansas."
+};
+
+// promise (fake loading)
+
+function loadData() {
+    return new Promise (resolve => {
+       setTimeout(() => {
+        let json = JSON.stringify(obj);
+        let data = JSON.parse(json);
+        resolve(data);
+       },1000);
+    });
+}
+
+let gameData;
+
+    // async+await
+async function startGame() 
+{ 
+    gameData = await loadData(); // wait for Promise
+    document.getElementById("hint").innerHTML = gameData.hint; 
+}
+startGame();
+
+function check()
+{
+    let user = document.getElementById("ans").value;
+    if (user.toLowerCase()===gameData.name.toLowerCase())
+
+    {         document.getElementById("out").innerText = "Correct";    }
+
+    else{         document.getElementById("out").innerText = "Incorrect";    }
+
+}
+
+
+    </script>
+</body>
+
+</html>
